@@ -11,7 +11,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        
+
         <link rel="stylesheet" href="../styles/food-items-list.css">
         <link rel="stylesheet" href="../styles/styles.css">
 
@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-                        <a class="navbar-brand" href="./food-items-list.php">Zomato</a>
+                        <a class="navbar-brand" href="./resturant-list.php">Zomato</a>
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
@@ -79,7 +79,7 @@
                         </div>
                     </a>
                 </div>
-            
+
                 <div class="col-6 col-md-3">
                     <a href="./update-food-details.php">
                         <div class="card">

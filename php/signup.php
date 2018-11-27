@@ -5,14 +5,14 @@
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        
+
         <!--Fontawesome CDN-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
         <!--Custom styles-->
         <link rel="stylesheet" type="text/css" href="../styles/signup.css">
-        
-        <title>Zomato Signip</title>
+
+        <title>Zomato Signup</title>
     </head>
     <body>
         <div class="container">
@@ -28,7 +28,7 @@
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                 </div>
                                 <input type="text" class="form-control" name="username" required placeholder="username">
-                                
+
                             </div>
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
@@ -46,13 +46,13 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                 </div>
-                                <input type="password" class="form-control" name="firstname" required placeholder="First Name">
+                                <input type="text" class="form-control" name="firstname" required placeholder="First Name">
                             </div>
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                 </div>
-                                <input type="password" class="form-control" name="lastname" required placeholder="Last Name">
+                                <input type="text" class="form-control" name="lastname" required placeholder="Last Name">
                             </div>
 
                             <div class="form-group">
@@ -66,6 +66,10 @@
 
 
         <?php
+             require_once './db_connection.php';
+             $conn = new mysqli($hn, $un, $pw, $db);
+             // print_r($conn);
+             if(!$conn) die($conn->connect_error);
              $name= $password= $confirmpassword= $firstname= $lastname= '';
              if(isset($_POST['username'])){
                 $name = $_POST['username'];
@@ -94,15 +98,18 @@
             }
 
             function verifyDetails($name, $password, $confirmpassword, $firstname, $lastname){
-                    if($password === $confirmpassword &&isset($_POST['password']) && isset($_POST['confirmpassword'])){
-                        header("Location: home.php"); 
+                    if(isset($_POST['password']) && isset($_POST['confirmpassword']) && $password === $confirmpassword){
+                        header("Location: home.php");
                         exit;
                      } else{
                          echo "password and Confirm password does not match";
                      }
             }
+
+            $query = "INSERT INTO user_table (first_name, last_name, user_name, password) VALUES ('$firstname', '$lastname', '$name', '$password')";
+            $result = $conn->query($query);
+            if(!$result) die($conn->connect_error);
             verifyDetails($name, $password, $confirmpassword, $firstname, $lastname);
-        
         ?>
     </body>
 </html>

@@ -5,13 +5,13 @@
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        
+
         <!--Fontawesome CDN-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
         <!--Custom styles-->
         <link rel="stylesheet" type="text/css" href="../styles/home.css">
-        
+
         <title>Zomato Login</title>
     </head>
     <body>
@@ -28,7 +28,7 @@
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                 </div>
                                 <input type="text" class="form-control" name="username" placeholder="username" required>
-                                
+
                             </div>
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
@@ -39,8 +39,8 @@
                             <div class="row align-items-center remember">
                                 <input type="checkbox" name="remember">Remember Me
                             </div>
-                            <div class="form-group">                
-                                    <input type="submit" value="Login" class="btn float-right login_btn">                                
+                            <div class="form-group">
+                                    <input type="submit" value="Login" class="btn float-right login_btn">
                                 <!-- <a class="btn float-right login_btn" href="./food-items-list.php" role="button">Login</a> -->
                             </div>
                         </form>
@@ -60,7 +60,11 @@
 
         <?php
             //  print_r($_POST);
-            
+             require_once './db_connection.php';
+             $conn = new mysqli($hn, $un, $pw, $db);
+              // print_r($conn);
+             if($conn->connect_error) die("connection failed " .$conn->connect_error);
+             // $query = "";
              $name= $password='';
              if(isset($_POST['username'])){
                 $name = $_POST['username'];
@@ -77,24 +81,35 @@
             //  echo $name." is the username"."<br>";
             //  echo $password." is the username"."<br>";
 
-             function authentication($name, $password){
-                if($name == 'user' && $password = "test"){
-                    echo "The user is a valid user";
-                    header("Location: food-items-list.php"); 
-                    exit;
+             function authentication($password, $passwordDB){
+                // if($name == 'user' && $password = "test"){
+                //     echo "The user is a valid user";
+                // }
+                if($password === $passwordDB){
+                  header("Location: ./resturant-list.php");
+                  exit;
+                } else{
+                        echo "<script>
+                        alert('The username or password is wrong');
+                        </script>";
                 }
              }
 
-             authentication($name, $password);
-        
+             $query = "SELECT password FROM user_table WHERE user_table.user_name = '$name'";
+             // print_r($query);
+             // echo '<br>';
+             $result = $conn->query($query);
+             if(!$result) die($conn->connect_error);
+             $result->data_seek($loop);
+             $row = $result->fetch_array(MYSQLI_NUM);
+             if($row[0]){
+               $passwordDB = $row[0];
+             }
+
+             if($name !='' && $password != ''){
+               authentication($password, $passwordDB);
+             }
+
         ?>
     </body>
 </html>
-
-
-
-
-
-
-
-
