@@ -41,30 +41,50 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-11">
-                    <div class="card">
+                  <?php
+                  require_once './db_connection.php';
+                  $conn = new mysqli($hn, $un, $pw, $db);
+                  // print_r($conn);
+                  echo '<br>';
+
+                  $query="SELECT * FROM resturant";
+                  $result = $conn->query($query);
+
+                  // print_r($result);
+
+                  if(!$result) die($conn->connect_error);
+
+                  $rowCount = $result->num_rows;
+                  // echo $rowCount;
+                  for($loop = 0; $loop< $rowCount; $loop++){
+                    $result->data_seek($loop);
+                    $row = $result->fetch_array(MYSQLI_NUM);
+                    // print_r($row);
+                    echo <<<_END
+                        <div class="card">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <img src="https://www.slcmenu.com/wp/wp-content/uploads/2018/01/Bombay-House-Indian-meal.-Credit-Bombay-House.jpg" alt="Bombay House">
+                                    <img src="$row[7]" alt="$row[1]">
                                 </div>
                                 <div class="col-md-9">
-                                    <a href="./resturant-details.php"><h4>Bombay House</h4></a>
+                                    <a href="./resturant-details.php"><h4>$row[1]</h4></a>
                                     <address>
-                                        <p>2731 Parleys Way, Salt Lake City, UT 84109</p>
+                                        <p>$row[2]</p>
                                     </address>
                                 </div>
                             </div>
                             <hr>
                             <div class="row ml-100">
                                 <div class="col-md-10">
-                                   <p><span>CUISINES: <span> <span id="card-values">Breakfast, Lunch, Indian</span></p>
-                                   <p><span>HOURS: </span><span id="card-timing">7am - 11pm (Mon-Sun)</span></p>
+                                   <p><span>CUISINES: <span> <span id="card-values">$row[3]</span></p>
+                                   <p><span>HOURS: </span><span id="card-timing">$row[5] - $row[6] (Mon-Sun)</span></p>
                                 </div>
                             </div>
                             <hr>
                             <div class="row ml-100 align-items-center">
                                 <div class="col-md-5 mb-50">
-                                    <a href="tel:+496170961709" class="last-row">
+                                    <a href="tel:+1 $row[4]" class="last-row">
                                    <span><i class="fas fa-phone"></i></span><b> Call</b>
                                     </a>
                                 </div>
@@ -74,47 +94,11 @@
                                     </a>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-                </div>
-                <div class="col-md-11">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <img src="https://i.ytimg.com/vi/yVQJ0kG0YvY/hqdefault.jpg" alt="Bawarchi">
-                                </div>
-                                <div class="col-md-9">
-                                    <a href="./resturant-details.php"><h4>Bawarchi</h4></a>
-                                    <address>
-                                        <p>689 S Jordan Pkwy, South Jordan, UT 84095</p>
-                                    </address>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row ml-100">
-                                <div class="col-md-10">
-                                   <p><span>CUISINES: <span> <span id="card-values">Breakfast, Lunch, Indian</span></p>
-                                   <p><span>HOURS: </span><span id="card-timing">7am - 11pm (Mon-Sun)</span></p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row ml-100 align-items-center">
-                                <div class="col-md-5 mb-50">
-                                    <a href="tel:+8014451565" class="last-row">
-                                   <span><i class="fas fa-phone"></i></span><b> Call</b>
-                                    </a>
-                                </div>
-                                <div class="col-md-5 mb-50">
-                                    <a href="./food-items-list.php" class="last-row">
-                                       <span><i class="fas fa-bars"></i></span> <b> View Menu</b>
-                                    </a>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
+_END;
+                  }
+                  ?>
                 </div>
             </div>
         </div>
