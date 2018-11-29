@@ -57,8 +57,8 @@
             </div>
         </div>
 
-
-        <?php
+<?php
+// session_start();
             //  print_r($_POST);
              require_once './db_connection.php';
              $conn = new mysqli($hn, $un, $pw, $db);
@@ -81,13 +81,16 @@
             //  echo $name." is the username"."<br>";
             //  echo $password." is the username"."<br>";
 
-             function authentication($password, $passwordDB){
+             function authentication($password, $passwordDB, $row){
                 // if($name == 'user' && $password = "test"){
                 //     echo "The user is a valid user";
                 // }
                 if($password === $passwordDB){
-                  header("Location: ./resturant-list.php");
-                  exit;
+                  // $_SESSION['user_id']= $row[0];
+                  setcookie('user_id', $row[0], time()+7200);
+                  // print_r($_SESSION['user_id']);
+                  header("Location: http://localhost:8888/food%20review%20app/php/resturant-list.php");
+                  exit();
                 } else{
                         echo "<script>
                         alert('The username or password is wrong');
@@ -95,21 +98,22 @@
                 }
              }
 
-             $query = "SELECT password FROM user_table WHERE user_table.user_name = '$name'";
+             $query = "SELECT * FROM user_table WHERE user_table.user_name = '$name'";
              // print_r($query);
              // echo '<br>';
              $result = $conn->query($query);
              if(!$result) die($conn->connect_error);
              $result->data_seek($loop);
              $row = $result->fetch_array(MYSQLI_NUM);
-             if($row[0]){
-               $passwordDB = $row[0];
+             print_r($row);
+
+             if($row[4]){
+               $passwordDB = $row[4];
              }
 
              if($name !='' && $password != ''){
-               authentication($password, $passwordDB);
+               authentication($password, $passwordDB, $row);
              }
-
-        ?>
+?>
     </body>
 </html>
