@@ -26,16 +26,16 @@
                 <div class="col-md-12">
                     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
                         <a class="navbar-brand" href="./resturant-list.php">Zomato</a>
-                        <div class="collapse navbar-collapse" id="navbarNav">
+                        <!-- <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav">
-                                <!-- <li class="nav-item active">
+                                <li class="nav-item active">
                                     <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                                </li> -->
+                                </li>
                                 <li class="nav-item">
-                                    <a href="./update-food-details.php" class="nav-link">Update Resturant Details</a>
+                                    <a href="./update-resturant-details.php" class="nav-link">Update Resturant Details</a>
                                 </li>
                             </ul>
-                        </div>
+                        </div> -->
                     </nav>
                 </div>
             </div>
@@ -122,7 +122,7 @@
   $result = $conn->query($query);
   print_r(!$result);
   if($result){
-    echo "hey";
+    // echo "hey";
     header("Location: resturant-list.php");
     exit();
   } else {
