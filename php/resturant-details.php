@@ -15,11 +15,31 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../styles/styles.css">
   <link rel="stylesheet" href="../styles/resturant-details.css">
   <title>Resturant-Details</title>
 </head>
 
 <body>
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12">
+              <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                  <a class="navbar-brand" href="./resturant-list.php">Zomato</a>
+                  <div class="collapse navbar-collapse" id="navbarNav">
+                      <ul class="navbar-nav">
+                          <!-- <li class="nav-item active">
+                              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                          </li> -->
+                          <li class="nav-item">
+                              <a href="./update-resturant-details.php" class="nav-link">Update Resturant Details</a>
+                          </li>
+                      </ul>
+                  </div>
+              </nav>
+          </div>
+      </div>
+  </div>
   <div class="container">
     <div class="row">
       <div class="col-md-10">
@@ -61,11 +81,12 @@
     </div>
     <div class="row">
       <div class="col-md-8">
-        <form action="" method="post">
+        <form action="./resturant-details.php" method="post">
           <div class="form-group">
             <h4>Write a Review</h4>
-            <input type="text" class="form-control" id="review" placeholder="Help other foodies by sharing your review">
-                        </div>
+            <input type="text" class="form-control" id="review" name="review" placeholder="Help other foodies by sharing your review">
+            <input type="text" class="form-control" id="rating" name="rating" placeholder="Rate your experience out of 5">
+          </div>
             <button type="submit" id="submitReview" class="btn btn-primary">Add a Review</button>
         </form>
       </div>
@@ -106,3 +127,40 @@
 </body>
 
 </html>
+
+<?php
+// session_start();
+  require_once './db_connection.php';
+  $conn = new mysqli($hn, $un, $pw, $db);
+  if($conn->connect_error) die("connection failed " .$conn->connect_error);
+  // print_r($conn);
+  echo '<br>';
+  // print_r($_SESSION['user_id']);
+  print_r($_COOKIE['user_id']);
+  $userId = $_COOKIE['user_id'];
+  echo '<br>';
+  if(isset($_POST['review'])){
+    $review = $_POST['review'];
+    $rating = $_POST['rating'];
+    $query = "INSERT INTO review (description, rating) VALUES ('$review', '$rating')";
+    print_r($query);
+    echo '<br>';
+    $result = $conn->query($query);
+    print_r(!$result);
+    echo '<br>';
+    $fetchReviewId = "SELECT review_id FROM review WHERE description = '$review'";
+    // print_r($fetchReviewId);
+    $fetchReviewIdResult = $conn->query($fetchReviewId);
+    print_r($fetchReviewIdResult);
+    $rowCount = $fetchReviewIdResult->num_rows;
+    for($loop = 0; $loop< $rowCount; $loop++){
+      $fetchReviewIdResult->data_seek($loop);
+      $row = $fetchReviewIdResult->fetch_array(MYSQLI_NUM);
+      $review_id = $row[0];
+    }
+
+  } else{
+
+    echo "No review is written";
+  }
+?>
