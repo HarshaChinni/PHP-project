@@ -3,7 +3,7 @@ body {
 }
 
 .row {
-  margin: 40px;
+  margin: 0px 40px 30px 40px;
 }
 
 .col-md-8 {
@@ -11,7 +11,8 @@ body {
   margin-left: 15px;
 }
 
-#review {
+#review,
+#rating {
   cursor: text;
   width: 400px;
   margin: 20px;
