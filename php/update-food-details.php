@@ -24,9 +24,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-                        <a class="navbar-brand" href="./food-items-list.php">Zomato</a>
+                        <a class="navbar-brand" href="./resturant-list.php">Zomato</a>
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a href="./food-items-list.php" class="nav-link">Food Items</a>
+                                </li>
                                 <li class="nav-item">
                                     <a href="./food-items-list.php" class="nav-link">Delete Food Details</a>
                                 </li>
@@ -43,10 +46,17 @@
                         <span class="form-title">
                             Update food item
                         </span>
-            
+                        <div class="div-input">
+                            <span class="label-input100">Food Name</span>
+                            <input class="input100" type="text" name="name" value="">
+                        </div>
                         <div class="div-input">
                             <span class="label-input100">Food Type</span>
                             <input class="input100" type="text" name="type" value="Indian">
+                        </div>
+                        <div class="div-input">
+                            <span class="label-input100">Price</span>
+                            <input class="input100" type="text" name="price" value="">
                         </div>
                         <div class="div-input">
                             <span class="label-input100">Description</span>
@@ -58,7 +68,7 @@
                                 Mushrooms, Olives, Onions, Green  bell peppers and Fresh tomatoes.
                             </textarea>
                         </div>
-            
+
                         <div class="container-contact100-form-btn">
                             <button class="contact100-form-btn">
                                 Update
