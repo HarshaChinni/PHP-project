@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
     <meta charset="utf-8">
 
@@ -34,9 +33,9 @@
                                 <li class="nav-item">
                                     <a href="./food-items-list.php" class="nav-link">Food Items</a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                     <a href="./update-food-details.php" class="nav-link">Update Food Details</a>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </nav>
@@ -47,7 +46,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <form class="form" action="./food-items-list.php">
+                    <form class="form" action="./add-food-details.php" method="post">
                         <span class="form-title">
                             Add food item
                         </span>
@@ -79,7 +78,7 @@
                         </div>
 
                         <div class="container-contact100-form-btn">
-                            <button class="contact100-form-btn">
+                            <button type="submit" class="contact100-form-btn">
                                 Add food
                             </button>
                         </div>
@@ -88,6 +87,34 @@
             </div>
         </div>
     </body>
-
-
 </html>
+
+<?php
+  require_once './db_connection.php';
+  $conn = new mysqli($hn, $un, $pw, $db);
+  if($conn->connect_error) die("connection failed " .$conn->connect_error);
+  if(isset($_POST)){
+      $name = $_POST['name'];
+      $type = $_POST['type'];
+      $price = $_POST['price'];
+      $description = $_POST['description'];
+      $ingredients = $_POST['ingredients'];
+      $image = $_POST['image'];
+  }
+  // print_r($_POST);
+
+  $query = "INSERT INTO food_item (item_name, item_type, price, item_image, description, ingredients)
+     VALUES ('$name', '$type', '$price', '$image', '$description', '$ingredients')";
+     // print_r($query);
+     // echo '<br>';
+ 		$result = $conn->query($query);
+
+ 		if($result){
+ 			header("Location: ./food-items-list.php");
+      exit();
+ 		} else{
+ 			die($conn->connect_error);
+ 		}
+
+
+?>
