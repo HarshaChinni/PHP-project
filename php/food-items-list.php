@@ -39,26 +39,36 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-6 col-md-3">
-                    <a href="./update-food-details.php">
-                        <div class="card">
-                            <img src="../images/vegetable.biryani.jpg" alt="Veg Biryani" class="card-img-top">
-                            <div class="card-body">
-                                <a href="./update-food-details.php" class="card-text"> <center> Vegetable Biryani </center> </a>
-                            </div>
+                <?php
+                  require_once './db_connection.php';
+
+                  $conn = new mysqli($hn, $un, $pw, $db);
+                  if($conn->connect_error) die($conn->connect_error);
+
+                  $query = "SELECT * FROM food_item";
+                  $result = $conn->query($query);
+                  // print_r($result);
+                  $rows = $result->num_rows;
+
+                  for($loop=0; $loop< $rows; $loop++){
+                    $result->data_seek($loop);
+                    $row = $result->fetch_array(MYSQLI_NUM);
+                    // print_r($row);
+                    echo <<<_END
+                        <div class="col-6 col-md-3">
+                            <a href="./update-food-details.php">
+                                <div class="card">
+                                    <img src="$row[4]" alt="$row[1]" class="card-img-top">
+                                    <div class="card-body">
+                                        <a href="./update-food-details.php" class="card-text"> <center> $row[1] - $row[3] $ </center> </a>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-3">
-                    <a href="./update-food-details.php">
-                        <div class="card">
-                            <img src="../images/chicken-biryani.jpg" alt="Chicken Biryani" class="card-img-top">
-                            <div class="card-body">
-                                <a href="./update-food-details.php" class="card-text"> <center>Chicken Biryani </center> </a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+_END;
+                  }
+
+                ?>
                 <div class="col-6 col-md-3">
                     <a href="./update-food-details.php">
                         <div class="card">
@@ -69,67 +79,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-6 col-md-3">
-                    <a href="./update-food-details.php">
-                        <div class="card">
-                            <img src="../images/donuts.jpg" alt="Donuts" class="card-img-top">
-                            <div class="card-body">
-                                <a href="./update-food-details.php" class="card-text"> <center>Donuts</center> </a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
 
-                <div class="col-6 col-md-3">
-                    <a href="./update-food-details.php">
-                        <div class="card">
-                            <img src="../images/burger.jpg" alt="Burger" class="card-img-top">
-                            <div class="card-body">
-                                <a href="./update-food-details.php" class="card-text"> <center>Burger</center> </a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-3">
-                    <a href="./update-food-details.php">
-                        <div class="card">
-                            <img src="../images/icecream.jpg" alt="Icecream" class="card-img-top">
-                            <div class="card-body">
-                                <a href="./update-food-details.php" class="card-text"> <center>Icecream</center> </a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-3">
-                    <a href="./update-food-details.php">
-                        <div class="card">
-                            <img src="../images/sub.jpg" alt="subway" class="card-img-top">
-                            <div class="card-body">
-                                <a href="./update-food-details.php" class="card-text"> <center>6-inch Sub</center> </a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-3">
-                    <a href="./update-food-details.php">
-                        <div class="card">
-                            <img src="../images/sandwich.jpg" alt="Sandwich" class="card-img-top">
-                            <div class="card-body">
-                                <a href="./update-food-details.php" class="card-text"> <center>Sandwich</center> </a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-3">
-                    <a href="./update-food-details.php">
-                        <div class="card">
-                            <img src="../images/cookies.jpg" alt="Cookies" class="card-img-top">
-                            <div class="card-body">
-                                <a href="./update-food-details.php" class="card-text"> <center>Cookies</center> </a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
                 <div class="col-6 col-md-3">
                     <a href="./update-food-details.php">
                         <div class="card">
@@ -140,26 +90,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-6 col-md-3">
-                    <a href="./update-food-details.php">
-                        <div class="card">
-                            <img src="../images/milkshakes.jpg" alt="Milkshake" class="card-img-top">
-                            <div class="card-body">
-                                <a href="./update-food-details.php" class="card-text"> <center>Milkshake</center> </a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-md-3">
-                    <a href="./update-food-details.php">
-                        <div class="card">
-                            <img src="../images/panipuri.jpg" alt="Panipuri" class="card-img-top">
-                            <div class="card-body">
-                                <a href="./update-food-details.php" class="card-text"> <center>Panipuri</center> </a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+
             </div>
         </div>
     </body>

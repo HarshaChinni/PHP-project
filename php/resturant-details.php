@@ -32,7 +32,7 @@
                               <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                           </li> -->
                           <li class="nav-item">
-                              <a href="./update-resturant-details.php" class="nav-link">Update Resturant Details</a>
+                              <a href="./update-resturant-details.php?res_id=<?php echo($_GET['res_id']);?>" class="nav-link">Update Resturant Details</a>
                           </li>
                       </ul>
                   </div>
@@ -81,7 +81,7 @@
     </div>
     <div class="row">
       <div class="col-md-8">
-        <form action="./resturant-details.php" method="post">
+        <form action="./resturant-details.php?res_id=<?php echo($_GET['res_id']);?>" method="post">
           <div class="form-group">
             <h4>Write a Review</h4>
             <input type="text" class="form-control" id="review" name="review" placeholder="Help other foodies by sharing your review">
@@ -94,20 +94,100 @@
     <div class="row">
       <div class="col-md-8">
         <h4>Review(s)</h4>
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <img src="../images/burger.jpg" alt="Profile Picture">
-                        </div>
-                        <div class="col-md-9">
-                          <h5><b>Harsha Chinni</b></h5>
-                          <p>The food was delicious, If you're a non-veg lover, try Chicken Biryani</p>
+        <?php
+        // session_start();
+          // echo "<br>";
+          require_once './db_connection.php';
+          $conn = new mysqli($hn, $un, $pw, $db);
+          if($conn->connect_error) die("connection failed " .$conn->connect_error);
+          // print_r($conn);
+          echo '<br>';
+          // print_r($_SESSION['user_id']);
+
+          $resturantId = $_GET['res_id'];
+          setcookie('res_id', $resturantId, time()+7200);
+          // print_r($resturantId);
+          echo '<br>';
+          $userId = $_COOKIE['user_id'];
+          // echo '<br>';
+          if(isset($_POST['review']) && isset($_POST['rating'])){
+            $review = $_POST['review'];
+            $rating = $_POST['rating'];
+            $query = "INSERT INTO review (description, rating) VALUES ('$review', $rating)";
+            // INSERT INTO `review` (`review_id`, `description`, `rating`, `review_type`) VALUES (NULL, 'The food was delicious, If you\'re a veg lover, try Palak Panner', '4.5', NULL);
+            // print_r($query);
+            // echo '<br>';
+            $result = $conn->query($query);
+            // echo ($result ? "Success" : "Failure");
+            echo '<br>';
+            if($result){
+              $fetchReviewId = "SELECT review_id FROM review WHERE description = '$review'";
+              // print_r($fetchReviewId);
+              $fetchReviewIdResult = $conn->query($fetchReviewId);
+              // print_r($fetchReviewIdResult);
+              $rowCount = $fetchReviewIdResult->num_rows;
+              for($loop = 0; $loop< $rowCount; $loop++){
+                $fetchReviewIdResult->data_seek($loop);
+                $row = $fetchReviewIdResult->fetch_array(MYSQLI_NUM);
+                $review_id = $row[0];
+              }
+              $query1 = "INSERT INTO user_review (user_id, review_id) VALUES ('$userId', '$review_id')";
+              // print_r($query1);
+              $userReviewInsertResult = $conn->query($query1);
+              $query2 = "INSERT INTO resturant_review (resturant_id, review_id) VALUES ('$resturantId', '$review_id')";
+              // print_r($query2);
+              $userResturantInsertResult = $conn->query($query2);
+              // print_r($userResturantInsertResult);
+            }
+
+          } else{
+
+            echo "No review is written";
+          }
+
+          $fetchReviewIds = "SELECT review_id FROM resturant_review WHERE resturant_id = '$resturantId'";
+          $reviewResult = $conn->query($fetchReviewIds);
+          $reviewCount = $reviewResult->num_rows;
+          // echo $reviewCount;
+          // echo "<br>";
+          for($loop = 0; $loop< $reviewCount; $loop++){
+            $reviewResult->data_seek($loop);
+            $row = $reviewResult->fetch_array(MYSQLI_NUM);
+            // print_r($row);
+            $fetchReviewData = "SELECT * FROM review WHERE review_id = '$row[0]'";
+            $reviewDescription = $conn->query($fetchReviewData);
+            $descCount = $reviewResult->num_rows;
+
+              $reviewDescription->data_seek($loop);
+              $row = $reviewDescription->fetch_array(MYSQLI_NUM);
+              // print_r($row);
+              $userNameQuery = "SELECT * from user_table WHERE user_id = (SELECT user_id FROM user_review WHERE review_id= '$row[0]' )";
+              $uNameResult = $conn->query($userNameQuery);
+              $uNameResult->data_seek($loop);
+              $user = $uNameResult->fetch_array(MYSQLI_NUM);
+              // echo "<br>";
+              // print_r($user);
+              echo <<<_END
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="../images/burger.jpg" alt="Profile Picture">
+                            </div>
+                            <div class="col-md-9">
+                              <h5><b>$user[1] $user[2]</b></h5>
+                              <p>$row[1]</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card">
+_END;
+
+          }
+
+        ?>
+
+            <!-- <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-3">
@@ -119,7 +199,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
       </div>
     </div>
   </div>
@@ -127,40 +207,3 @@
 </body>
 
 </html>
-
-<?php
-// session_start();
-  require_once './db_connection.php';
-  $conn = new mysqli($hn, $un, $pw, $db);
-  if($conn->connect_error) die("connection failed " .$conn->connect_error);
-  // print_r($conn);
-  echo '<br>';
-  // print_r($_SESSION['user_id']);
-  print_r($_COOKIE['user_id']);
-  $userId = $_COOKIE['user_id'];
-  echo '<br>';
-  if(isset($_POST['review'])){
-    $review = $_POST['review'];
-    $rating = $_POST['rating'];
-    $query = "INSERT INTO review (description, rating) VALUES ('$review', '$rating')";
-    print_r($query);
-    echo '<br>';
-    $result = $conn->query($query);
-    print_r(!$result);
-    echo '<br>';
-    $fetchReviewId = "SELECT review_id FROM review WHERE description = '$review'";
-    // print_r($fetchReviewId);
-    $fetchReviewIdResult = $conn->query($fetchReviewId);
-    print_r($fetchReviewIdResult);
-    $rowCount = $fetchReviewIdResult->num_rows;
-    for($loop = 0; $loop< $rowCount; $loop++){
-      $fetchReviewIdResult->data_seek($loop);
-      $row = $fetchReviewIdResult->fetch_array(MYSQLI_NUM);
-      $review_id = $row[0];
-    }
-
-  } else{
-
-    echo "No review is written";
-  }
-?>
