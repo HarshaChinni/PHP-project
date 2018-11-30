@@ -41,7 +41,6 @@
             <div class="row">
                 <?php
                   require_once './db_connection.php';
-
                   $conn = new mysqli($hn, $un, $pw, $db);
                   if($conn->connect_error) die($conn->connect_error);
 
@@ -56,11 +55,11 @@
                     // print_r($row);
                     echo <<<_END
                         <div class="col-6 col-md-3">
-                            <a href="./update-food-details.php">
+                            <a href="./update-food-details.php?food_id=$row[0]">
                                 <div class="card">
                                     <img src="$row[4]" alt="$row[1]" class="card-img-top">
                                     <div class="card-body">
-                                        <a href="./update-food-details.php" class="card-text"> <center> $row[1] - $row[3] $ </center> </a>
+                                        <a href="./update-food-details.php?food_id=$row[0]" class="card-text"> <center> $row[1] - $row[3] $ </center> </a>
                                     </div>
                                 </div>
                             </a>
@@ -69,7 +68,7 @@ _END;
                   }
 
                 ?>
-                <div class="col-6 col-md-3">
+                <!-- <div class="col-6 col-md-3">
                     <a href="./update-food-details.php">
                         <div class="card">
                             <img src="../images/chicken-pizza.jpg" alt="Chicken Pizza" class="card-img-top">
@@ -78,9 +77,9 @@ _END;
                             </div>
                         </div>
                     </a>
-                </div>
+                </div> -->
 
-                <div class="col-6 col-md-3">
+                <!-- <div class="col-6 col-md-3">
                     <a href="./update-food-details.php">
                         <div class="card">
                             <img src="../images/deserts.jpg" alt="Deserts" class="card-img-top">
@@ -89,7 +88,7 @@ _END;
                             </div>
                         </div>
                     </a>
-                </div>
+                </div> -->
 
             </div>
         </div>
