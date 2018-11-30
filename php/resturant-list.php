@@ -68,7 +68,7 @@
                                     <img src="$row[7]" alt="$row[1]">
                                 </div>
                                 <div class="col-md-9">
-                                    <a href="./resturant-details.php"><h4>$row[1]</h4></a>
+                                    <a href="./resturant-details.php?res_id=$row[0]"><h4>$row[1]</h4></a>
                                     <address>
                                         <p>$row[2]</p>
                                     </address>
