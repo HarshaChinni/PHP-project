@@ -54,8 +54,8 @@
               for($loop = 0; $loop< $rowCount; $loop++){
                 $result->data_seek($loop);
                 $row = $result->fetch_array(MYSQLI_NUM);
-                print_r($res_id);
-                print_r($row);
+                // print_r($res_id);
+                // print_r($row);
                 echo <<<_END
                     <div class="col-md-12">
                         <form class="form" method="post" action="./update-resturant-details.php?res_id=$resturantId">
@@ -110,9 +110,9 @@ _END;
 
                 $updateQuery = "UPDATE resturant SET resturant_name = '$name', address = '$address', cuisine = '$cuisine', start_time = '$open', close_time = '$close', logo = '$logo') WHERE resturant_id = '$resturantId'";
                 echo '<br>';
-                print_r($updateQuery);
+                // print_r($updateQuery);
                 $updateResult = $conn->query($updateQuery);
-                print_r($updateResult);
+                // print_r($updateResult);
                 if(!$updateResult) die($conn->connect_error);
               }
 

@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -25,9 +29,21 @@
                         <a class="navbar-brand" href="./resturant-list.php">Zomato</a>
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <a href="./add-food-details.php" class="nav-link">Add Food Details</a>
-                                </li>
+                              <?php
+                                // $firstname = $_SESSION['firstname'];
+                                // print_r($firstname);
+                              if($_SESSION['is_admin']){
+                                  echo <<<_END
+                                      <li class="nav-item">
+                                          <a href="./add-food-details.php" class="nav-link">Add Food Details</a>
+                                      </li>
+_END;
+
+                                }
+                                ?>
+                                 <!-- <li class="nav-item">
+                                     <a href="./add-food-details.php" class="nav-link">Add Food Details</a>
+                                 </li> -->
                                 <li class="nav-item" style="float:right">
                                     <a class="nav-link" href="./home.php">Logout</a>
                                 </li>
@@ -74,17 +90,6 @@ _END;
                             <img src="../images/chicken-pizza.jpg" alt="Chicken Pizza" class="card-img-top">
                             <div class="card-body">
                                 <a href="./update-food-details.php" class="card-text"> <center>Chicken Pizza </center> </a>
-                            </div>
-                        </div>
-                    </a>
-                </div> -->
-
-                <!-- <div class="col-6 col-md-3">
-                    <a href="./update-food-details.php">
-                        <div class="card">
-                            <img src="../images/deserts.jpg" alt="Deserts" class="card-img-top">
-                            <div class="card-body">
-                                <a href="./update-food-details.php" class="card-text"> <center>Deserts</center> </a>
                             </div>
                         </div>
                     </a>

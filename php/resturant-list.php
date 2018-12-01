@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -26,9 +30,24 @@
                         <a class="navbar-brand" href="./resturant-list.php">Zomato</a>
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <a href="./add-resturant.php" class="nav-link">Add Resturant</a>
-                                </li>
+                              <?php
+                                // $firstname = $_SESSION['firstname'];
+                                // print_r($firstname);
+                              if($_SESSION['is_admin']){
+                                  echo <<<_END
+                                      <li class="nav-item">
+                                          <a href="./add-resturant.php" class="nav-link">Add Resturant</a>
+                                      </li>
+_END;
+
+                              }
+//                               echo <<<_END
+//                                 <li class="nav-item">
+//                                     <a href="#" class="nav-link">Welcome $firstname</a>
+//                                 </li>
+// _END;
+//                               ?>
+
                                 <li class="nav-item" style="float:right">
                                     <a class="nav-link" href="./home.php">Logout</a>
                                 </li>

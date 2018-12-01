@@ -49,16 +49,16 @@
                         <div class="d-flex justify-content-center links">
                             Don't have an account? <a href="./signup.php">Sign Up</a>
                         </div>
-                        <div class="d-flex justify-content-center">
+                        <!-- <div class="d-flex justify-content-center">
                             <a href="#">Forgot your password?</a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
         </div>
 
 <?php
-// session_start();
+session_start();
             //  print_r($_POST);
              require_once './db_connection.php';
              $conn = new mysqli($hn, $un, $pw, $db);
@@ -85,10 +85,13 @@
                 // if($name == 'user' && $password = "test"){
                 //     echo "The user is a valid user";
                 // }
-                if($password === $passwordDB){
-                  // $_SESSION['user_id']= $row[0];
+                // echo password_verify($password, $passwordDB);
+
+                if(password_verify($password, $passwordDB) || ($password === $passwordDB)){
+                  $_SESSION['is_admin']= $row[5];
+                  $_SESSION['firstname'] = $row[1];
                   setcookie('user_id', $row[0], time()+7200);
-                  // print_r($_SESSION['user_id']);
+                  print_r($_SESSION['is_admin']);
                   header("Location: http://localhost:8888/food%20review%20app/php/resturant-list.php");
                   exit();
                 } else{
@@ -105,7 +108,7 @@
              if(!$result) die($conn->connect_error);
              $result->data_seek($loop);
              $row = $result->fetch_array(MYSQLI_NUM);
-             print_r($row);
+             // print_r($row);
 
              if($row[4]){
                $passwordDB = $row[4];

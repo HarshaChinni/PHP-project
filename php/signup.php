@@ -78,14 +78,20 @@
              }
              if(isset($_POST['password'])){
                  $password = $_POST['password'];
-             } else{
-                 $password = "";
-             }
-             if(isset($_POST['confirmpassword'])){
-                $confirmpassword = $_POST['confirmpassword'];
-            } else{
-                $confirmpassword = "";
-            }
+               if(isset($_POST['confirmpassword'])){
+                  $confirmpassword = $_POST['confirmpassword'];
+                    if($password === $confirmpassword){
+                        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                        echo $password;
+                    }  else{
+                        echo '<script type="text/javascript">alert("Password and Confirm password doesnot match");</script>';
+                    }
+              } else{
+                  $confirmpassword = "";
+              }
+          } else{
+              $password = "";
+          }
             if(isset($_POST['firstname'])){
                 $firstname = $_POST['firstname'];
             } else{
@@ -97,19 +103,15 @@
                 $lastname = "";
             }
 
-            function verifyDetails($name, $password, $confirmpassword, $firstname, $lastname){
-                    if(isset($_POST['password']) && isset($_POST['confirmpassword']) && $password === $confirmpassword){
-                        header("Location: home.php");
-                        exit;
-                     } else{
-                         echo "password and Confirm password does not match";
-                     }
+            function redirectToLogin(){
+                header("Location: home.php");
+                exit;
             }
 
             $query = "INSERT INTO user_table (first_name, last_name, user_name, password) VALUES ('$firstname', '$lastname', '$name', '$password')";
             $result = $conn->query($query);
             if(!$result) die($conn->connect_error);
-            verifyDetails($name, $password, $confirmpassword, $firstname, $lastname);
+            redirectToLogin();
         ?>
     </body>
 </html>

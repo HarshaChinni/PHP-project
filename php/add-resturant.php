@@ -1,3 +1,8 @@
+<?php
+session_start();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -97,6 +102,8 @@
 
 
 <?php
+// session_start();
+  print_r($_SESSION['is_admin']);
   require_once './db_connection.php';
   $conn = new mysqli($hn, $un, $pw, $db);
 
@@ -120,7 +127,7 @@
   // print_r($query);
   // echo "<br>";
   $result = $conn->query($query);
-  print_r(!$result);
+  // print_r(!$result);
   if($result){
     // echo "hey";
     header("Location: resturant-list.php");

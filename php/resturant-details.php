@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,9 +34,19 @@
                           <!-- <li class="nav-item active">
                               <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                           </li> -->
-                          <li class="nav-item">
+                          <?php
+                          if($_SESSION['is_admin']){
+                            $res_id = $_GET['res_id'];
+                              echo <<<_END
+                                <li class="nav-item">
+                                    <a href="./update-resturant-details.php?res_id=$res_id" class="nav-link">Update Resturant Details</a>
+                                </li>
+_END;
+                          }
+                          ?>
+                          <!-- <li class="nav-item">
                               <a href="./update-resturant-details.php?res_id=<?php echo($_GET['res_id']);?>" class="nav-link">Update Resturant Details</a>
-                          </li>
+                          </li> -->
                       </ul>
                   </div>
               </nav>

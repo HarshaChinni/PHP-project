@@ -54,7 +54,7 @@
                 for($loop=0; $loop< $rowCount; $loop++){
                   $result->data_seek($loop);
                   $row = $result->fetch_array(MYSQLI_NUM);
-                  print_r($row);
+                  // print_r($row);
                   echo <<<_END
                       <div class="col-md-12">
                           <form class="form" action="./update-food-details.php?food_id=$food_id" method="post">
@@ -100,7 +100,7 @@ _END;
 
                   if(isset($_POST)){
                     echo '<br>';
-                    print_r($_POST);
+                    // print_r($_POST);
                     $name = $_POST['name'];
                     $type = $_POST['type'];
                     $price = $_POST['price'];
