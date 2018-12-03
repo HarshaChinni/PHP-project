@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,9 +33,16 @@
                                 <li class="nav-item">
                                     <a href="./food-items-list.php" class="nav-link">Food Items</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="./food-items-list.php" class="nav-link">Delete Food Details</a>
-                                </li>
+                                <?php
+                                  if($_SESSION['is_admin']){
+                                    echo <<<_END
+                                      <li class="nav-item">
+                                          <a href="./delete-food.php" class="nav-link">Delete Food Details</a>
+                                      </li>
+_END;
+                                  }
+                                ?>
+
                             </ul>
                         </div>
                     </nav>
@@ -46,6 +56,7 @@
                 $conn = new mysqli($hn, $un, $pw, $db);
                 // print_r($conn);
                 $food_id = $_GET['food_id'];
+                $_SESSION['food_id'] = $food_id;
                 $query = "SELECT * FROM food_item WHERE food_item.item_id = $food_id";
                 // print_r($query);
                 $result = $conn->query($query);
@@ -59,7 +70,7 @@
                       <div class="col-md-12">
                           <form class="form" action="./update-food-details.php?food_id=$food_id" method="post">
                               <span class="form-title">
-                                  Update food item
+                                   Food details
                               </span>
                               <div class="div-input">
                                   <span class="label-input100">Food Name</span>

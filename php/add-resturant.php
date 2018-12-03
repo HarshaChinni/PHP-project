@@ -122,14 +122,14 @@ session_start();
       VALUES ('$resturantName', '$resturantAddress', '$cuisine', '$phone', '$openTime', '$closeTime', '$logo')";
 
       $result = $conn->query($query);
-      header("Location: ./resturant-list.php");
-      print_r($result);
+      header("Location: resturant-list.php");
+      exit();
+      // print_r($result);
       if(!$result){
         die($conn->connect_error);
       }
 
   }
-
 
 
 ?>
