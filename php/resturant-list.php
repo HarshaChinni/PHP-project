@@ -31,7 +31,7 @@ session_start();
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav">
                               <?php
-                                // $firstname = $_SESSION['firstname'];
+                                $firstname = $_SESSION['firstname'];
                                 // print_r($firstname);
                               if($_SESSION['is_admin']){
                                   echo <<<_END
@@ -40,13 +40,16 @@ session_start();
                                       </li>
 _END;
 
-                              }
-//                               echo <<<_END
-//                                 <li class="nav-item">
-//                                     <a href="#" class="nav-link">Welcome $firstname</a>
-//                                 </li>
-// _END;
-//                               ?>
+                            }
+
+                                echo <<<_END
+                                  <li class="nav-item">
+                                      <a href="#" class="nav-link">Welcome $firstname</a>
+                                  </li>
+_END;
+
+
+                    ?>
 
                                 <li class="nav-item" style="float:right">
                                     <a class="nav-link" href="./home.php">Logout</a>

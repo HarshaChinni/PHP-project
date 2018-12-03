@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,7 +31,7 @@
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <a href="./resturant-list.php" class="nav-link">Delete resturant details</a>
+                                    <a href="./resturant-delete.php" class="nav-link">Delete resturant details</a>
                                 </li>
                             </ul>
                         </div>
@@ -44,6 +47,7 @@
               // print_r($conn);
               echo '<br>';
               $resturantId = $_GET['res_id'];
+              $_SESSION['res_id'] = $resturantId;
               $query="SELECT * FROM resturant WHERE resturant_id = '$resturantId'";
               $result = $conn->query($query);
               // print_r($result);

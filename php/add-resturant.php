@@ -103,13 +103,13 @@ session_start();
 
 <?php
 // session_start();
-  print_r($_SESSION['is_admin']);
+  // print_r($_SESSION['is_admin']);
   require_once './db_connection.php';
   $conn = new mysqli($hn, $un, $pw, $db);
 
   // print_r($conn);
 
-    if(isset($_POST['name'])){
+    if(isset($_POST['name']) && isset($_POST['cuisine']) && isset($_POST['address']) && isset($_POST['open'])){
       $resturantName = $_POST['name'];
       $cuisine = $_POST['cuisine'];
       $resturantAddress = $_POST['address'];
@@ -117,26 +117,18 @@ session_start();
       $closeTime = $_POST['close'];
       $logo = $_POST['logo'];
       $phone = $_POST['phone'];
-      // print_r($_POST);
-      // echo "<br>";
-      // echo "<br>";
+
+      $query="INSERT INTO resturant (resturant_name, address, cuisine, telephone, start_time, close_time, logo)
+      VALUES ('$resturantName', '$resturantAddress', '$cuisine', '$phone', '$openTime', '$closeTime', '$logo')";
+
+      $result = $conn->query($query);
+      header("Location: ./resturant-list.php");
+      print_r($result);
+      if(!$result){
+        die($conn->connect_error);
+      }
+
   }
-
-  $query="INSERT INTO resturant (resturant_name, address, cuisine, telephone, start_time, close_time, logo)
-  VALUES ('$resturantName', '$resturantAddress', '$cuisine', '$phone', '$openTime', '$closeTime', '$logo')";
-  // print_r($query);
-  // echo "<br>";
-  $result = $conn->query($query);
-  // print_r(!$result);
-  if($result){
-    // echo "hey";
-    header("Location: resturant-list.php");
-    exit();
-  } else {
-    die($conn->connect_error);
-  }
-
-
 
 
 

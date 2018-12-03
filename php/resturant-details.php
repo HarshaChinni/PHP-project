@@ -44,9 +44,7 @@ session_start();
 _END;
                           }
                           ?>
-                          <!-- <li class="nav-item">
-                              <a href="./update-resturant-details.php?res_id=<?php echo($_GET['res_id']);?>" class="nav-link">Update Resturant Details</a>
-                          </li> -->
+                      
                       </ul>
                   </div>
               </nav>
@@ -153,9 +151,6 @@ _END;
               // print_r($userResturantInsertResult);
             }
 
-          } else{
-
-            echo "No review is written";
           }
 
           $fetchReviewIds = "SELECT review_id FROM resturant_review WHERE resturant_id = '$resturantId'";
@@ -174,7 +169,7 @@ _END;
               $reviewDescription->data_seek($loop);
               $row = $reviewDescription->fetch_array(MYSQLI_NUM);
               // print_r($row);
-              $userNameQuery = "SELECT * from user_table WHERE user_id = (SELECT user_id FROM user_review WHERE review_id= '$row[0]' )";
+              $userNameQuery = "SELECT * from user_table WHERE user_id = (SELECT user_id FROM user_review WHERE review_id= $row[0])";
               $uNameResult = $conn->query($userNameQuery);
               $uNameResult->data_seek($loop);
               $user = $uNameResult->fetch_array(MYSQLI_NUM);
@@ -197,22 +192,8 @@ _END;
 _END;
 
           }
-
         ?>
 
-            <!-- <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <img src="../images/icecream.jpg" alt="Profile Picture">
-                        </div>
-                        <div class="col-md-9">
-                          <h5><b>Sravya Nanda Harsha</b></h5>
-                          <p>The food was delicious, If you're a veg lover, try Palak Panner</p>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
       </div>
     </div>
   </div>
